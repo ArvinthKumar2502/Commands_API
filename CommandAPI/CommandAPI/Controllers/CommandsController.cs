@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using CommandAPI.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace CommandAPI.Controllers
 {
@@ -12,36 +12,62 @@ namespace CommandAPI.Controllers
     [ApiController]
     public class CommandsController : ControllerBase
     {
-        // GET: api/<CommandsController>
+        private readonly CommandContext _context;
+
+        public CommandsController(CommandContext context)
+        {
+            _context = context;
+        }
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<IEnumerable<Command>> GetCommandItems()
         {
-            return new string[] { "value1", "value2" };
+            return _context.CommandItems;
         }
 
-        // GET api/<CommandsController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public ActionResult<Command> GetCommandItem(int id)
         {
-            return "value";
+            var CommandItem = _context.CommandItems.Find(id);
+
+            if (CommandItem == null)
+                return NotFound();
+            return CommandItem;
         }
 
-        // POST api/<CommandsController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public ActionResult<Command> PostCommandItem(Command command)
         {
+            _context.CommandItems.Add(command);
+            _context.SaveChanges();
+
+            return CreatedAtAction("GetCommandItem", new Command { Id = command.Id }, command);
         }
 
-        // PUT api/<CommandsController>/5
+        
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public ActionResult Put(int id, Command command)
         {
+            if (id != command.Id)
+                return BadRequest();
+
+            _context.Entry(command).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            _context.SaveChanges();
+            return NoContent();
         }
 
-        // DELETE api/<CommandsController>/5
+  
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public ActionResult<Command> Delete(int id)
         {
+            var CommandItem = _context.CommandItems.Find(id);
+
+            if (CommandItem == null)
+                return NotFound();
+
+            _context.CommandItems.Remove(CommandItem);
+            _context.SaveChanges();
+            return CommandItem;
         }
     }
 }

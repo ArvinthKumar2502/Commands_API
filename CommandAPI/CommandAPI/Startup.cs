@@ -22,10 +22,9 @@ namespace CommandAPI
         }
         public IConfiguration Configuration { get; }
 
-       public void ConfigureServices(IServiceCollection services)
-        {//"Server=DESKTOP-VNBNH3G\\LOCALDB;Database=CmdAPI;Trusted_Connection=True;MultipleActiveResultSets=true"
-          
-          //string ConnString = @"Server=(localdb)\MSSQLLocalDB\\LOCALDB;Database=CmdAPI;Trusted_Connection=True;MultipleActiveResultSets=true";
+
+        public void ConfigureServices(IServiceCollection services)
+        {
             services.AddDbContext<CommandContext>(
                 opt => opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
@@ -40,7 +39,6 @@ namespace CommandAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseMvc();   
            
         }
