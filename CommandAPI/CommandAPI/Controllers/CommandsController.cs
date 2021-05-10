@@ -46,14 +46,15 @@ namespace CommandAPI.Controllers
 
         
         [HttpPut("{id}")]
-        public ActionResult Put(int id, Command command)
+        public ActionResult<Command> Put(int id, Command command)
         {
             if (id != command.Id)
                 return BadRequest();
 
             _context.Entry(command).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
             _context.SaveChanges();
-            return NoContent();
+            var commandItem = _context.CommandItems.Find(id);
+            return commandItem;
         }
 
   
