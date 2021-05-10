@@ -1,2 +1,2 @@
-# CommandAPI
+# Commands API
  
