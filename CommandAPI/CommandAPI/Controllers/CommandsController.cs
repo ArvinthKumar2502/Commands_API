@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using CommandAPI.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using CommandAPI.Models;
 
 
 namespace CommandAPI.Controllers
@@ -44,7 +41,7 @@ namespace CommandAPI.Controllers
             return CreatedAtAction("GetCommandItem", new Command { Id = command.Id }, command);
         }
 
-        
+
         [HttpPut("{id}")]
         public ActionResult<Command> Put(int id, Command command)
         {
@@ -57,7 +54,7 @@ namespace CommandAPI.Controllers
             return commandItem;
         }
 
-  
+
         [HttpDelete("{id}")]
         public ActionResult<Command> Delete(int id)
         {

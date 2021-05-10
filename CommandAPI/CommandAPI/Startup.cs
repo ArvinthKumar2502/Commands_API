@@ -1,16 +1,11 @@
+using CommandAPI.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using CommandAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 
 namespace CommandAPI
@@ -38,7 +33,7 @@ namespace CommandAPI
                     Title = "Commands API",
                     Version = "v1",
                     Description = "Describes each command with its functionality in an Operating System",
-                    
+
                 });
             });
 
